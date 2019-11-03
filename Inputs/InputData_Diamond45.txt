@@ -1,0 +1,23 @@
+# Define number of elements
+NumberElements=2
+# Define the direction vectors of each element
+e_1=[0.7071,0.7071]
+e_2=[-0.7071,0.7071]
+# define the global periodicity vectors
+Y_1=[0.7071,0.7071]
+Y_2=[-0.7071,0.7071]
+# Number of inner nodes
+NumberNodes=1
+# List of origin and end points along with delta
+Ob=[1,1]
+Eb=[1,1]
+Delta1=[1,0]
+Delta2=[0,1]
+# List of element axial and bending stiffness
+Ka=[10,10]
+Kb=[1,1]
+# List of element lengths and volumes
+Lb=[10,10]
+# Norme of the periodicity vectors
+L1=10
+L2=10

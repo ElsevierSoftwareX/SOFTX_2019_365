@@ -1,0 +1,6 @@
+The bulk modulus is K =      0.056
+The elastic modulus in the x direction is Ex =      0.172
+The elastic modulus in the y direction is Ey =      0.172
+The Poisson's yx value is nu_yx =     -0.538
+The Poisson's xy value is nu_xy =     -0.538
+The shear modulus is G =      0.032
