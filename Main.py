@@ -4,8 +4,8 @@ Created on Thu Sep  5 13:24:31 2019
 
 @author: nicka
 """
-from WriteFiles import WriteEffectProp, WriteTensorsToFile, PlotProperties
-from Solver import Solver
+from DiscreteLatticeMesh.WriteFiles import WriteEffectProp, WriteTensorsToFile, PlotProperties
+from DiscreteLatticeMesh.Solver import Solver
 
 if __name__ == "__main__":
 

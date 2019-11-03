@@ -1,9 +1,9 @@
-from ReadInput import ReadInpDataJSON
-from AsymptoticForcesMoments import GeomStrainParams, AsymptoticForm
-from AsymptSystemSol import SystemSolution
-from StressVector import StressVectorsComputation
-from StiffFlexibilTensors import StiffFlexTensors
-from EffectiveProperties import EffectProps
+from .ReadInput import ReadInpDataJSON
+from .AsymptoticForcesMoments import GeomStrainParams, AsymptoticForm
+from .AsymptSystemSol import SystemSolution
+from .StressVector import StressVectorsComputation
+from .StiffFlexibilTensors import StiffFlexTensors
+from .EffectiveProperties import EffectProps
 
 class Solver:
 
