@@ -8,11 +8,13 @@ Created on Thu Sep 19 14:10:48 2019
 
 def StressVectorsComputation(NumberOfNodes, DirectionVectors, TransverseDirVectors, NforceDef, TforceDef,
                              SystemSol, DeltaPerVect1, DeltaPerVect2):
+
     # Collect the final normal, shear and moment expressions
     NormalForceF = [[0] * 4 for _ in range(len(TransverseDirVectors))]  # du1/dx du1/dy du2/dx du2/dy
     ShearForceF = [[0] * 5 for _ in range(len(TransverseDirVectors))]  # du1/dx du1/dy du2/dx du2/dy phi
+
     for i in range(len(TransverseDirVectors)):
-        # store the normal and the shear force without the unknokns
+        # store the normal and the shear force without the unknowns
         for j in range(2*NumberOfNodes, 2*NumberOfNodes+4):  # store for du1/dx, du1/dy, du2/dx, du2/dy
             NormalForceF[i][j-2*NumberOfNodes] = NforceDef[i][j]
             ShearForceF[i][j-2*NumberOfNodes] = TforceDef[i][j]

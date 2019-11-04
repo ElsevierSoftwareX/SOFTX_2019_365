@@ -4,7 +4,7 @@ Created on Thu Sep  5 13:24:31 2019
 
 @author: nicka
 """
-from DiscreteLatticeMesh import WriteEffectProp, WriteTensorsToFile, PlotProperties, Solver
+from DiscreteLatticeMesh import WriteEffectivePropertiesToFile, WriteTensorsToFile, PlotEffectiveProperties, Solver
 
 if __name__ == "__main__":
 
@@ -17,5 +17,5 @@ if __name__ == "__main__":
 
     # Write to file
     WriteTensorsToFile(solver.CMatTensor, solver.FlexMatTensor)
-    WriteEffectProp(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
-    PlotProperties(solver.Ex, solver.Ey, solver.Bulk, solver.G, solver.Poissonyx, solver.Poissonxy)
+    WriteEffectivePropertiesToFile(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
+    PlotEffectiveProperties(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)

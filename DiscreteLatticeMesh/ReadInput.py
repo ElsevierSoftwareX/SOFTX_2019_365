@@ -5,8 +5,8 @@ Created on Thu Sep  5 16:37:36 2019
 @author: nicka
 """
 import json
-import jsonschema
 from jsonschema import validate
+
 
 def ReadInpDataJSON(FileName):
 
@@ -15,8 +15,8 @@ def ReadInpDataJSON(FileName):
     schema = {
         "type": "object",
         "properties": {
-            "NumberElements": {"type": "number"},
-            "NumberNodes": {"type": "number"},
+            "NumberElements": {"type": "integer", "minimum": 1},
+            "NumberNodes": {"type": "integer", "minimum": 1},
             "Y_1": {"type": "array", "minItems": 2, "maxItems": 2, "items": [{"type": "number"}]},
             "Y_2": {"type": "array", "minItems": 2, "maxItems": 2, "items": [{"type": "number"}]},
             "Ob": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
@@ -26,8 +26,8 @@ def ReadInpDataJSON(FileName):
             "Ka": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
             "Kb": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
             "Lb": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
-            "L1": {"type": "number"},
-            "L2": {"type": "number"}
+            "L1": {"type": "number", "minimum": 0},
+            "L2": {"type": "number", "minimum": 0}
         }
     }
 
@@ -40,7 +40,7 @@ def ReadInpDataJSON(FileName):
 
     for i in range(1, NumElements+1):
         key = 'e_' + str(i)
-        d = {key : {"type": "array", "minItems" : 2, "maxItems": 2, "items": [{ "type" : "number"}]}}
+        d = {key: {"type": "array", "minItems": 2, "maxItems": 2, "items": [{"type": "number"}]}}
         schema.update(d)
 
     for key in ["Ob", "Eb", "Delta1", "Delta2", "Ka", "Kb", "Lb"]:
@@ -48,7 +48,6 @@ def ReadInpDataJSON(FileName):
         schema["properties"][key]["maxItems"] = NumElements
 
     print(schema)
-
     print(json.dumps(schema, indent=4, sort_keys=True))
 
     validate(data, schema)

@@ -15,7 +15,7 @@ def WriteTensorsToFile(CMatTensor, FlexMatTensor):
     np.savetxt('./Results/FlexMatrix.txt', FlexMatTensor, fmt='%10.3f')
 
 
-def WriteEffectProp(Bulk, Ex, Ey, Poissonyx, Poissonxy, G):
+def WriteEffectivePropertiesToFile(Bulk, Ex, Ey, Poissonyx, Poissonxy, G):
     # write the effective properties to file
     file1 = open("./Results/EffectProperties.txt", "w")
     file1.write("The bulk modulus is K = %10.3f\r\n" % Bulk)
@@ -27,7 +27,7 @@ def WriteEffectProp(Bulk, Ex, Ey, Poissonyx, Poissonxy, G):
     file1.close()
 
 
-def PlotProperties(Ex, Ey, Bulk, G, Poissonyx, Poissonxy):
+def PlotEffectiveProperties(Bulk, Ex, Ey, Poissonyx, Poissonxy, G):
     # Plot the normal, shear and bulk moduli to file 
     plt.figure(1)
     names = ['Ex', 'Ey', 'K', 'G']

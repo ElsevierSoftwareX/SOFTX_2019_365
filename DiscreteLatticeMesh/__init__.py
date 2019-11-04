@@ -1,3 +1,2 @@
-from .WriteFiles import WriteEffectProp, WriteTensorsToFile, PlotProperties
+from .WriteFiles import WriteTensorsToFile, WriteEffectivePropertiesToFile, PlotEffectiveProperties
 from .Solver import Solver
-
