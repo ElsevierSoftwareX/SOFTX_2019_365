@@ -8,7 +8,7 @@ import json
 from jsonschema import validate
 
 
-def ReadInpDataJSON(FileName):
+def ReadInpDataJSON(data):
 
     # Create the schema, as a nested Python dict,
     # specifying the data elements, their names and their types.
@@ -31,10 +31,9 @@ def ReadInpDataJSON(FileName):
         }
     }
 
-    with open(FileName, 'r') as f:
-        data = json.load(f)
-
-    print(json.dumps(data, indent=4, sort_keys=False))
+    # with open(FileName, 'r') as f:
+    #    data = json.load(f)
+    # print(json.dumps(data, indent=4, sort_keys=False))
 
     NumElements = data["NumberElements"]
 

@@ -18,10 +18,10 @@ class Solver:
         self.Poissonxy = None
         self.G = None
 
-    def solve(self, filepath):
+    def solve(self, data):
 
         [DirectionVectors, PeriodicityVectors, NumberOfNodes, OriginBeams, EndBeams, DeltaPerVect1, DeltaPerVect2,
-         AxialStiffness, BendingStiffness, ElemLengths, L1, L2] = ReadInpDataJSON(filepath)
+         AxialStiffness, BendingStiffness, ElemLengths, L1, L2] = ReadInpDataJSON(data)
 
         # TODO: dPhi1, dPhi2 not used
         [P1, P2, TransverseDirVectors, dU1, dU2, dPhi1, dPhi2] = GeomStrainParams(DirectionVectors,
