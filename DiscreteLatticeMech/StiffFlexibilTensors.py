@@ -30,8 +30,8 @@ def StiffFlexTensors(P1, P2, StressVector1, StressVector2):
     for i in range(2):  # runs over columns
         for j in range(2):  # runs over rows
             for k in range(5):  # runs over the entries of the stress vector
-                sigma[j][i*5+k] = sigma[j][i*5+k]+(1/Detg)*StressVector1[j][k]*dR1[i]
-                sigma[j][i*5+k] = sigma[j][i*5+k]+(1/Detg)*StressVector2[j][k]*dR2[i]
+                sigma[j][i*5+k] += (1/Detg)*StressVector1[j][k]*dR1[i]
+                sigma[j][i*5+k] += (1/Detg)*StressVector2[j][k]*dR2[i]
               
     # computation of the rigidity matrix 
     Cmat = [[0]*4 for _ in range(4)]

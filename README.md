@@ -1,1 +1,1 @@
-# DiscreteLatticeMesh
+# DiscreteLatticeMech

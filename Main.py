@@ -4,7 +4,7 @@ Created on Thu Sep  5 13:24:31 2019
 
 @author: nicka
 """
-from DiscreteLatticeMesh import WriteEffectivePropertiesToFile, WriteTensorsToFile, PlotEffectiveProperties, Solver
+from DiscreteLatticeMech import WriteEffectivePropertiesToFile, WriteTensorsToFile, PlotEffectiveProperties, Solver
 
 if __name__ == "__main__":
 
