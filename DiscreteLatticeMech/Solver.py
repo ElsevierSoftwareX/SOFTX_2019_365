@@ -23,9 +23,7 @@ class Solver:
         [DirectionVectors, PeriodicityVectors, NumberOfNodes, OriginBeams, EndBeams, DeltaPerVect1, DeltaPerVect2,
          AxialStiffness, BendingStiffness, ElemLengths, L1, L2] = ReadInpDataJSON(data)
 
-        # TODO: dPhi1, dPhi2 not used
-        [P1, P2, TransverseDirVectors, dU1, dU2, dPhi1, dPhi2] = GeomStrainParams(DirectionVectors,
-                                                                                  PeriodicityVectors, L1, L2)
+        [P1, P2, TransverseDirVectors, dU1, dU2] = GeomStrainParams(DirectionVectors, PeriodicityVectors, L1, L2)
 
         [NforceDef, TforceDef, MomEndDef, MomOrigDef] = AsymptoticForm(NumberOfNodes, DirectionVectors,
                                                                        TransverseDirVectors, OriginBeams, EndBeams,

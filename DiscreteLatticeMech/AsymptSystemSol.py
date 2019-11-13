@@ -4,7 +4,8 @@ Created on Thu Sep 19 13:09:08 2019
 
 @author: nicka
 """
-import numpy as np 
+import sys
+import numpy as np
 
 
 def SystemSolution(NumberOfNodes, DirectionVectors, TransverseDirVectors, OriginBeams, EndBeams, NforceDef,
@@ -82,13 +83,16 @@ def SystemSolution(NumberOfNodes, DirectionVectors, TransverseDirVectors, Origin
         JoinedKnownEquations[1][i] = 0
 
     for i in range(len(JoinedUnknownEquations)):
-        if abs(JoinedUnknownEquations[i][i]) < 0.0000001:
+        if abs(JoinedUnknownEquations[i][i]) < 1e-7:
             JoinedUnknownEquations[i][i] = 1
 
-    # compute the solution of the
-    # UnknownInv=[[0]*(2*NumberOfNodes+NumberOfNodes) for i in range(2*NumberOfNodes+NumberOfNodes)]
-    # SystemSol=[[0]*(4) for i in range(2*NumberOfNodes+1*NumberOfNodes)]
-    UnknownInv = np.linalg.inv(JoinedUnknownEquations)
+    # compute the solution of the system
+    try:
+        UnknownInv = np.linalg.inv(JoinedUnknownEquations)
+    except np.linalg.LinAlgError as err:
+        print("Fatal error: could not invert JoinedUnknownEquations. Error: {}".format(str(err)))
+        sys.exit(1)
+
     SystemSol = UnknownInv.dot(JoinedKnownEquations)
     
     return SystemSol

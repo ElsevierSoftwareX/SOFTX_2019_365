@@ -4,6 +4,7 @@ Created on Thu Sep 19 14:26:35 2019
 
 @author: nicka
 """
+import sys
 import math
 import numpy as np 
 
@@ -78,6 +79,10 @@ def StiffFlexTensors(P1, P2, StressVector1, StressVector2):
     CMatTensor[2][1] = CMatTensor[1][2]
 
     # compute compliance matrix
-    FlexMatTensor = np.linalg.inv(CMatTensor)
-    
+    try:
+        FlexMatTensor = np.linalg.inv(CMatTensor)
+    except np.linalg.LinAlgError as err:
+        print("Fatal error: could not invert CMatTensor. Error: {}".format(str(err)))
+        sys.exit(1)
+
     return [CMatTensor, FlexMatTensor]

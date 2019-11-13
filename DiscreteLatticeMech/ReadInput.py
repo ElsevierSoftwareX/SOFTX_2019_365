@@ -19,10 +19,10 @@ def ReadInpDataJSON(data):
             "NumberNodes": {"type": "integer", "minimum": 1},
             "Y_1": {"type": "array", "minItems": 2, "maxItems": 2, "items": [{"type": "number"}]},
             "Y_2": {"type": "array", "minItems": 2, "maxItems": 2, "items": [{"type": "number"}]},
-            "Ob": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
-            "Eb": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
-            "Delta1": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
-            "Delta2": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
+            "Ob": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "integer", "minimum": 1}]},
+            "Eb": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "integer", "minimum": 1}]},
+            "Delta1": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "integer", "minimum": 0}]},
+            "Delta2": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "integer", "minimum": 0}]},
             "Ka": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
             "Kb": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
             "Lb": {"type": "array", "minItems": None, "maxItems": None, "items": [{"type": "number"}]},
@@ -30,10 +30,6 @@ def ReadInpDataJSON(data):
             "L2": {"type": "number", "minimum": 0}
         }
     }
-
-    # with open(FileName, 'r') as f:
-    #    data = json.load(f)
-    # print(json.dumps(data, indent=4, sort_keys=False))
 
     NumElements = data["NumberElements"]
 

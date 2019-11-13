@@ -23,8 +23,6 @@ def GeomStrainParams(DirectionVectors, PeriodicityVectors, L1, L2):
     # Create the dU1 and dU2 coefficient matrices
     dU1 = [0]*4
     dU2 = [0]*4  # each multiplies dU1/dx, dU1/dy, dU2/dx, DuU2/Dy
-    dPhi1 = [0]*2
-    dPhi2 = [0]*2  # each multiplies dphi/dx, dphi/dy
     dU1[0] = P1[0]
     dU1[1] = P1[1]
     dU1[2] = P1[0]
@@ -33,13 +31,9 @@ def GeomStrainParams(DirectionVectors, PeriodicityVectors, L1, L2):
     dU2[1] = P2[1]
     dU2[2] = P2[0]
     dU2[3] = P2[1]
-    dPhi1[0] = P1[0]
-    dPhi1[1] = P1[1]
-    dPhi2[0] = P2[0]
-    dPhi2[1] = P2[1]
 
     # return the parameters
-    return [P1, P2, TransverseDirVectors, dU1, dU2, dPhi1, dPhi2]
+    return [P1, P2, TransverseDirVectors, dU1, dU2]
 
 
 def AsymptoticForm(NumberOfNodes, DirectionVectors, TransverseDirVectors, OriginBeams, EndBeams, AxialStiffness,

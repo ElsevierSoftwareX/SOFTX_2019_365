@@ -4,18 +4,29 @@ Created on Thu Sep  5 13:24:31 2019
 
 @author: nicka
 """
+import sys
 import json
-from DiscreteLatticeMech import WriteEffectivePropertiesToFile, WriteTensorsToFile, PlotEffectiveProperties, Solver
+from DiscreteLatticeMech import Solver, Writer
 
 
 if __name__ == "__main__":
 
-    solver = Solver()
+    if len(sys.argv) == 1:
+        print("Usage: {} <input filename (json)>".format(sys.argv[0]))
+        sys.exit(1)
 
-    #filepath = 'Inputs/InputData_CarreReentrant.json'
-    #with open(filepath, 'r') as f:
-    #    data = json.load(f)
+    # filepath = 'Inputs/InputData_CarreReentrant.json'
+    filepath = sys.argv[1]
 
+    try:
+        with open(filepath, 'r') as f:
+            data = json.load(f)
+    except IOError as error:
+        print("could not open input file {}".format(filepath))
+        sys.exit(1)
+
+    """
+    # an example of how data can be defined as a dictionary and passed to the solver
     data = {
         "NumberElements": 10,
         "e_1": [1, 0],
@@ -41,12 +52,14 @@ if __name__ == "__main__":
         "L1": 17.3205,
         "L2": 17.3205
     }
-
+    """
     print(json.dumps(data, indent=4, sort_keys=False))
 
+    solver = Solver()
     solver.solve(data)
 
     # Write to file
-    WriteTensorsToFile(solver.CMatTensor, solver.FlexMatTensor)
-    WriteEffectivePropertiesToFile(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
-    PlotEffectiveProperties(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
+    writer = Writer()
+    writer.WriteTensorsToFile(solver.CMatTensor, solver.FlexMatTensor)
+    writer.WriteEffectivePropertiesToFile(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
+    writer.PlotEffectiveProperties(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
