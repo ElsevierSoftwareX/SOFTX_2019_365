@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 19 12:37:16 2019
-
-@author: nicka
+Geometric and strain Parameters along with the asymptotic form expansion of the system
 """
 
 

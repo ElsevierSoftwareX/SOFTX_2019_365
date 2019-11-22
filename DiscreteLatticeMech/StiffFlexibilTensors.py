@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 19 14:26:35 2019
-
-@author: nicka
+Construction of stiffness and flexibility tensors
 """
 import sys
 import math
@@ -67,22 +65,12 @@ def StiffFlexTensors(P1, P2, StressVector1, StressVector2):
     CmatV[2][0] = CmatV[0][2]
     CmatV[2][1] = CmatV[1][2]
     
-    # Transform to tensor notation
-    CMatTensor = [[0.0]*3 for _ in range(3)]
-    for i in range(3):
-        for j in range(3):
-            CMatTensor[i][j] = CmatV[i][j]
-    CMatTensor[0][2] = math.sqrt(2)*CMatTensor[0][2]
-    CMatTensor[1][2] = math.sqrt(2)*CMatTensor[1][2]
-    CMatTensor[2][2] = CMatTensor[2][2]  # check for the transformation
-    CMatTensor[2][0] = CMatTensor[0][2]
-    CMatTensor[2][1] = CMatTensor[1][2]
 
     # compute compliance matrix
     try:
-        FlexMatTensor = np.linalg.inv(CMatTensor)
+        FlexMatTensor = np.linalg.inv(CmatV)
     except np.linalg.LinAlgError as err:
         print("Fatal error: could not invert CMatTensor. Error: {}".format(str(err)))
         sys.exit(1)
 
-    return [CMatTensor, FlexMatTensor]
+    return [CmatV, FlexMatTensor, Detg]

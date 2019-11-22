@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 19 14:10:48 2019
-
-@author: nicka
+Assembly of the stress vectors
 """
 
 

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 19 14:55:06 2019
-
-@author: nicka
+Write results into file and make the corresponding plots
 """
 import os
 import numpy as np
@@ -24,7 +22,7 @@ class Writer:
         # write Flexibility matrix to file
         np.savetxt(self.folder + '/FlexMatrix.txt', FlexMatTensor, fmt='%10.3f')
 
-    def WriteEffectivePropertiesToFile(self, Bulk, Ex, Ey, Poissonyx, Poissonxy, G):
+    def WriteEffectivePropertiesToFile(self, Bulk, Ex, Ey, Poissonyx, Poissonxy, G, rho):
         # write the effective properties to file
         file1 = open(self.folder + "/EffectProperties.txt", "w")
         file1.write("The bulk modulus is K = %10.3f\r\n" % Bulk)
@@ -33,6 +31,7 @@ class Writer:
         file1.write("The Poisson's yx value is nu_yx = %10.3f\r\n" % Poissonyx)
         file1.write("The Poisson's xy value is nu_xy = %10.3f\r\n" % Poissonxy)
         file1.write("The shear modulus is G = %10.3f\r\n" % G)
+        file1.write("The relative density is rho = %10.3f\r\n" % rho)
         file1.close()
 
     def PlotEffectiveProperties(self, Bulk, Ex, Ey, Poissonyx, Poissonxy, G):

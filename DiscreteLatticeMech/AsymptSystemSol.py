@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Created on Thu Sep 19 13:09:08 2019
-
-@author: nicka
+Solution of the descrete system after expansion
 """
 import sys
 import numpy as np
