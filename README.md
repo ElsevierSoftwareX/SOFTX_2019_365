@@ -1,1 +1,1 @@
-# DiscreteLatticeMech
+# DiscreteLatticeMechCore
