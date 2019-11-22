@@ -1,5 +1,4 @@
 # GUI Homogenization Lattice 
-# DOS REIS Francisco
 # 15 Nov 2019
 
 import wx
@@ -1145,10 +1144,14 @@ class MyFrame(wx.Frame):
         # Write list of element lengths and volumes
         myfile.write("\"comment7\": \"List of element lengths and volumes\",\n")
         str_Lb="\"Lb\": ["
+        str_tb="\"tb\": ["
         for i in self.EL.beams:
             str_Lb=str_Lb+str(i.length)+','
+            str_tb=str_tb+str(i.width)+','
         str_Lb=str_Lb[0:len(str_Lb)-1]+"],\n"
+        str_tb=str_tb[0:len(str_tb)-1]+"],\n"
         myfile.write(str_Lb)
+        myfile.write(str_tb)
         # Write norme of the periodicity vectors
         myfile.write("\"comment8\": \"Norme of the periodicity vectors\",\n")
         str1=""
@@ -1215,10 +1218,14 @@ class MyFrame(wx.Frame):
         # Write list of element lengths and volumes
         myfile.write("# List of element lengths and volumes\n")
         str_Lb="Lb=["
+        str_tb="tb=["
         for i in self.EL.beams:
             str_Lb=str_Lb+str(i.length)+','
+            str_tb=str_tb+str(i.width)+','
         str_Lb=str_Lb[0:len(str_Lb)-1]+"]\n"
+        str_tb=str_tb[0:len(str_tb)-1]+"]\n"
         myfile.write(str_Lb)
+        myfile.write(str_tb)
         # Write norme of the periodicity vectors
         myfile.write("# Norme of the periodicity vectors\n")
         for i in self.EL.periods:
@@ -1271,7 +1278,7 @@ class MyFrame(wx.Frame):
         # Write to file
         
         writer.WriteTensorsToFile(solver.CMatTensor, solver.FlexMatTensor)
-        writer.WriteEffectivePropertiesToFile(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
+        writer.WriteEffectivePropertiesToFile(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G,solver.rho)
         writer.PlotEffectiveProperties(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
     
     def Calculation_letsdoit(self, event):
