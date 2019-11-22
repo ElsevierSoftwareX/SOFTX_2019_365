@@ -13,10 +13,10 @@ if __name__ == "__main__":
 
     if len(sys.argv) == 1:
         print("Usage: {} <input filename (json)>".format(sys.argv[0]))
-        sys.exit(1)
-
-    # filepath = 'Inputs/InputData_CarreReentrant.json'
-    filepath = sys.argv[1]
+        # sys.exit(1)
+        filepath = 'Inputs/InputData_CarreReentrant.json'
+    else:
+        filepath = sys.argv[1]
 
     try:
         with open(filepath, 'r') as f:
@@ -53,7 +53,7 @@ if __name__ == "__main__":
         "L2": 17.3205
     }
     """
-    print(json.dumps(data, indent=4, sort_keys=False))
+    # print(json.dumps(data, indent=4, sort_keys=False))
 
     solver = Solver()
     solver.solve(data)
