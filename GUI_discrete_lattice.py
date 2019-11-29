@@ -520,10 +520,12 @@ class Graph_window(wx.Window):
                 N2=self.EL.index_node(i.node_2)
                 Y1=self.EL.periods[0]
                 Y2=self.EL.periods[1]
-
+                Y1W=np.array([Y1.x,Y1.y])*Y1.length
+                Y2W=np.array([Y2.x,Y2.y])*Y2.length
+                
                 N1_coord=np.array([N1.x,N1.y])
-                N2_coord=np.array([N2.x+i.delta_1*Y1.x+i.delta_2*Y2.x,
-                                N2.y+i.delta_1*Y1.y+i.delta_2*Y2.y])
+                N2_coord=np.array([N2.x+i.delta_1*Y1W[0]+i.delta_2*Y2W[0],N2.y+i.delta_1*Y1W[1]+i.delta_2*Y2W[1]])
+	
 
                 PS1=self.view_1.world_to_screen(N1_coord[0],N1_coord[1])
                 PS2=self.view_1.world_to_screen(N2_coord[0],N2_coord[1])
@@ -596,7 +598,7 @@ class Graph_window(wx.Window):
                     if Item1[0]==1:
                         self.Gd_pere.tree_ctrl_1.Delete(Item1[1])
                     else:
-                        print("Point pas trouvé dans l'arbre")
+                        print("Point not found in the tree")
                     for j in self.EL.beams:
                         if numero==j.node_1 or numero==j.node_2:
                             self.EL.beams.remove(j)
@@ -604,7 +606,7 @@ class Graph_window(wx.Window):
                             if Item1[0]==1:
                                 self.Gd_pere.tree_ctrl_1.Delete(Item1[1])
                             else:
-                                print("Poutre pas trouvé dans l'arbre")
+                                print("Element not found in the tree")
             for i in self.EL.beams:
                 if i.focused==True:
                     numero=i.number
@@ -614,13 +616,14 @@ class Graph_window(wx.Window):
                     if Item1[0]==1:
                         self.Gd_pere.tree_ctrl_1.Delete(Item1[1])
                     else:
-                        print("Point pas trouvé dans l'arbre")
+                        print("Element not found in the tree")
                     break
 
         if self.EL.Mode=="ADD_POINT":
             resultat=self.Gd_pere.Search_branch_tree_ctrl_perso("Nodes")
+            print(resultat)
             if (resultat[0]==-1):
-                self.Gd_pere.Message_perso("Erreur : pas de branche point",wx.ICON_ERROR)
+                self.Gd_pere.Message_perso("Error: no branch of Node inputs",wx.ICON_ERROR)
             str1=self.Gd_pere.tree_ctrl_1.GetItemText(resultat[2])
             str2=str1.split(':')
             str3=str2[0].split('.')
@@ -648,7 +651,7 @@ class Graph_window(wx.Window):
                     self.EL.Mode="ADD_BEAM_P1"
                     resultat=self.Gd_pere.Search_branch_tree_ctrl_perso("Beams")
                     if (resultat[0]==-1):
-                        self.Gd_pere.Message_perso("Erreur : pas de branche beam",wx.ICON_ERROR)
+                        self.Gd_pere.Message_perso("Error: No branch of beam inputs",wx.ICON_ERROR)
                     if (resultat[0]==1):
                         str1=self.Gd_pere.tree_ctrl_1.GetItemText(resultat[2])
                         str2=str1.split(':')
@@ -670,7 +673,7 @@ class Graph_window(wx.Window):
                     
                     resultat=self.Gd_pere.Search_branch_tree_ctrl_perso("Material")
                     if (resultat[0]==-1):
-                        self.Gd_pere.Message_perso("Erreur : pas de branche Material",wx.ICON_ERROR)
+                        self.Gd_pere.Message_perso("Error: no branch of material inputs",wx.ICON_ERROR)
                     str5=self.Gd_pere.tree_ctrl_1.GetItemText(resultat[2])
                     str6=str5.split(':')
                     str7=str6[1].split(',')
