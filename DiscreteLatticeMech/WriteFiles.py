@@ -28,8 +28,8 @@ class Writer:
         file1.write("The bulk modulus is K = %10.3f\r\n" % Bulk)
         file1.write("The elastic modulus in the x direction is Ex = %10.3f\r\n" % Ex)
         file1.write("The elastic modulus in the y direction is Ey = %10.3f\r\n" % Ey)
-        file1.write("The Poisson's yx value is nu_yx = %10.3f\r\n" % Poissonyx)
-        file1.write("The Poisson's xy value is nu_xy = %10.3f\r\n" % Poissonxy)
+        file1.write("The Poisson's yx value is v_yx = %10.3f\r\n" % Poissonyx)
+        file1.write("The Poisson's xy value is v_xy = %10.3f\r\n" % Poissonxy)
         file1.write("The shear modulus is G = %10.3f\r\n" % G)
         file1.write("The relative density is rho = %10.3f\r\n" % rho)
         file1.close()
@@ -41,6 +41,8 @@ class Writer:
         values = [Ex, Ey, Bulk, G]
         barlist = plt.bar(names, values)
         plt.suptitle('Normal, Shear and Bulk Moduli')
+        barlist[0].set_color('b')
+        barlist[1].set_color('b')
         barlist[2].set_color('r')
         barlist[3].set_color('g')
         plt.xticks(rotation='82.5')
@@ -48,9 +50,11 @@ class Writer:
 
         # plot the poisson's ratio values
         plt.figure(2)
-        names = ['nu_{yx}', 'nu_xy']
+        names = [r'$\nu_{yx}$', r'$\nu_{xy}$']
         values = [Poissonyx, Poissonxy]
-        plt.bar(names, values)
+        barplot=plt.bar(names, values)
+        barplot[0].set_color('g')
+        barplot[1].set_color('b')
         plt.suptitle('Poisson ratio values per direction')
         plt.xticks(rotation='82.5')
         plt.savefig(self.folder + '/PoissonRation.png', dpi=400)
@@ -59,8 +63,9 @@ class Writer:
         plt.figure(3)
         names = ['Ex/G', 'Ey/G']
         values = [Ex/G, Ey/G]
-        barplot = plt.bar(names, values)
-        barplot[0].set_color('g')
+        barplot1 = plt.bar(names, values)
+        barplot1[0].set_color('g')
+        barplot1[1].set_color('b')
         plt.suptitle('Normal to shear ratio per direction')
         plt.xticks(rotation='82.5')
         plt.savefig(self.folder + '/NormalToShear.png', dpi=400)
