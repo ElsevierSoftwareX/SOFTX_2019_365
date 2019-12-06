@@ -1,0 +1,17 @@
+include DiscreteLatticeMech/GUI/GUI_discrete_lattice.py
+include DiscreteLatticeMech/GUI/icone_moins_point.bmp
+include DiscreteLatticeMech/GUI/icone_moins.bmp
+include DiscreteLatticeMech/GUI/icone_plus_poutre.bmp
+include DiscreteLatticeMech/GUI/icone_plus_point.bmp
+include DiscreteLatticeMech/GUI/icone_moins_poutre.bmp
+include DiscreteLatticeMech/__init__.py
+include DiscreteLatticeMech/Core/__init__.py
+include DiscreteLatticeMech/Core/WriteFiles.py
+include DiscreteLatticeMech/Core/StressVector.py
+include DiscreteLatticeMech/Core/StiffFlexibilTensors.py
+include DiscreteLatticeMech/Core/Solver.py
+include DiscreteLatticeMech/Core/ReadInput.py
+include DiscreteLatticeMech/Core/EffectiveProperties.py
+include DiscreteLatticeMech/Core/AsymptoticForcesMoments.py
+include DiscreteLatticeMech/Core/AsymptSystemSol.py
+
