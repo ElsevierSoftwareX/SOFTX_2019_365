@@ -9,6 +9,7 @@ from .EffectiveProperties import EffectProps
 class Solver:
 
     def __init__(self):
+        self.InputData=None
         self.CMatTensor = None
         self.FlexMatTensor = None
         self.Bulk = None
