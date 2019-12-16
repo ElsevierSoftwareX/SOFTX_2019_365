@@ -3,18 +3,19 @@ import os
 import sys
 import json
 
-core_location = os.path.dirname(os.path.abspath(__file__))
-package_location = core_location + '/../'
-print(package_location)
-sys.path.append(package_location)
-
-from DiscreteLatticeMech import Solver, Writer
+try:
+    from DiscreteLatticeMech import Solver, Writer
+except ImportError:
+    file_location = os.path.dirname(os.path.abspath(__file__))
+    package_location = file_location + '/../'
+    sys.path.append(package_location)
+    from DiscreteLatticeMech import Solver, Writer
 
 if __name__ == "__main__":
 
     if len(sys.argv) == 1:
         print("Usage: {} <input filename (json)>".format(sys.argv[0]))
-        filepath = 'InputData_SquareEx.json'
+        filepath = file_location + '/InputData_SquareEx.json'
     else:
         filepath = sys.argv[1]
 

@@ -2,12 +2,13 @@
 import os
 import sys
 
-core_location = os.path.dirname(os.path.abspath(__file__))
-package_location = core_location + '/../'
-print(package_location)
-sys.path.append(package_location)
-
-from DiscreteLatticeMech import Solver, Writer
+try:
+    from DiscreteLatticeMech import Solver, Writer
+except ImportError:
+    file_location = os.path.dirname(os.path.abspath(__file__))
+    package_location = file_location + '/../'
+    sys.path.append(package_location)
+    from DiscreteLatticeMech import Solver, Writer
 
 
 if __name__ == "__main__":

@@ -7,14 +7,15 @@ Created on Thu Sep  5 13:24:31 2019
 import sys
 import os
 import json
-from DiscreteLatticeMech import Solver, Writer
 
-tests_location = os.path.dirname(os.path.abspath(__file__))
+
+from DiscreteLatticeMech import Solver
 
 
 def test_carrereentrantex():
 
-    filepath = tests_location + '/InputData_CarreReentrantEx.json'
+    file_location = os.path.dirname(os.path.abspath(__file__))
+    filepath = file_location + '/InputData_CarreReentrantEx.json'
 
     try:
         with open(filepath, 'r') as f:
