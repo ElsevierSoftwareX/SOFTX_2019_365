@@ -27,6 +27,6 @@ if __name__ == "__main__":
     solver.solve(data)
 
     writer = Writer()
-    writer.WriteTensorsToFile(solver.CMatTensor, solver.FlexMatTensor)
+    writer.WriteTensorsToFile(solver.InputData, solver.CMatTensor, solver.FlexMatTensor)
     writer.WriteEffectivePropertiesToFile(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G, solver.rho)
     writer.PlotEffectiveProperties(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
