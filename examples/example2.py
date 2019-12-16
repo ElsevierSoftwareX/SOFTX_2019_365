@@ -4,8 +4,6 @@ Created on Thu Sep  5 13:24:31 2019
 
 @author: nicka
 """
-import sys
-import json
 from DiscreteLatticeMech import Solver, Writer
 
 
@@ -28,7 +26,6 @@ if __name__ == "__main__":
         'e_1': [1, 0],
         'e_2': [0, 1],
         'tb': [1, 1]}
-
 
     solver = Solver()
     solver.solve(data)

@@ -2,7 +2,6 @@
 """
 Read of input in the specified data format
 """
-import json
 from jsonschema import validate
 
 
@@ -55,7 +54,7 @@ def ReadInpDataJSON(data):
     AxialStiffness = []
     BendingStiffness = []
     ElemLengths = []
-    ElemThickn=[]
+    ElemThickn = []
     
     for i in range(1, NumElements+1):
         key = 'e_' + str(i)
@@ -106,7 +105,7 @@ def ReadInpDataJSON(data):
     for i in range(NumElements):
         ElemLengths.append(float(Length[i]))
         
-    ElemThickn= data["tb"]
+    ElemThickn = data["tb"]
     for i in range(NumElements):
         ElemLengths.append(float(ElemThickn[i]))
 

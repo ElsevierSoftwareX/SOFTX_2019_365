@@ -3,8 +3,7 @@
 Construction of stiffness and flexibility tensors
 """
 import sys
-import math
-import numpy as np 
+import numpy as np
 
 
 def StiffFlexTensors(P1, P2, StressVector1, StressVector2):

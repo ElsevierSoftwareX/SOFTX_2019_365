@@ -22,7 +22,7 @@ class Solver:
     def solve(self, data):
 
         [DirectionVectors, PeriodicityVectors, NumberOfNodes, OriginBeams, EndBeams, DeltaPerVect1, DeltaPerVect2,
-         AxialStiffness, BendingStiffness, ElemLengths,ElemThickn, L1, L2] = ReadInpDataJSON(data)
+         AxialStiffness, BendingStiffness, ElemLengths, ElemThickn, L1, L2] = ReadInpDataJSON(data)
 
         [P1, P2, TransverseDirVectors, dU1, dU2] = GeomStrainParams(DirectionVectors, PeriodicityVectors, L1, L2)
 
@@ -41,7 +41,8 @@ class Solver:
                                                                   SystemSol, DeltaPerVect1, DeltaPerVect2)
 
         # Results of stiffness and flexibility matrix
-        [self.CMatTensor, self.FlexMatTensor,Detg] = StiffFlexTensors(P1, P2, StressVector1, StressVector2)
+        [self.CMatTensor, self.FlexMatTensor, Detg] = StiffFlexTensors(P1, P2, StressVector1, StressVector2)
 
         # Results of effective moduli and Poisson's ratio values
-        [self.Bulk, self.Ex, self.Ey, self.Poissonyx, self.Poissonxy, self.G, self.rho] = EffectProps(self.FlexMatTensor,ElemLengths,ElemThickn,Detg)
+        [self.Bulk, self.Ex, self.Ey, self.Poissonyx, self.Poissonxy, self.G, self.rho] = \
+            EffectProps(self.FlexMatTensor, ElemLengths, ElemThickn, Detg)
