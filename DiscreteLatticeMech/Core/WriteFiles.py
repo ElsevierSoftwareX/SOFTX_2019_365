@@ -16,7 +16,7 @@ class Writer:
         os.mkdir(self.folder)
         print("Results folder: {}".format(self.folder))
 
-    def WriteTensorsToFile(self, CMatTensor, FlexMatTensor):
+    def WriteTensorsToFile(self, InputData, CMatTensor, FlexMatTensor):
         # Store the InputData in the Result file
         with open(self.folder + '/InputData.json', 'w',encoding='utf-8') as outfile:
            json.dump(InputData, outfile, ensure_ascii=False,  indent=6, sort_keys=False)
