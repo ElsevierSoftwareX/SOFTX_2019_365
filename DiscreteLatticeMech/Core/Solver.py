@@ -21,18 +21,19 @@ class Solver:
         self.rho = None
 
     def solve(self, data):
-
+        # Load from given input data
         [DirectionVectors, PeriodicityVectors, NumberOfNodes, OriginBeams, EndBeams, DeltaPerVect1, DeltaPerVect2,
          AxialStiffness, BendingStiffness, ElemLengths, ElemThickn, L1, L2] = ReadInpDataJSON(data)
-
+        self.InputData=data
+        # Geometry and strain computations
         [P1, P2, TransverseDirVectors, dU1, dU2] = GeomStrainParams(DirectionVectors, PeriodicityVectors, L1, L2)
-
+        # Asymptotic form expansion
         [NforceDef, TforceDef, MomEndDef, MomOrigDef] = AsymptoticForm(NumberOfNodes, DirectionVectors,
                                                                        TransverseDirVectors, OriginBeams, EndBeams,
                                                                        AxialStiffness, BendingStiffness, DeltaPerVect1,
                                                                        DeltaPerVect2, dU1, dU2, ElemLengths)
 
-        # System computation
+        # System solution computation
         SystemSol = SystemSolution(NumberOfNodes, DirectionVectors, TransverseDirVectors, OriginBeams, EndBeams,
                                    NforceDef, TforceDef, MomOrigDef, MomEndDef)
 
