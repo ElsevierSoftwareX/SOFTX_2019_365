@@ -14,14 +14,12 @@ import wx
 import wx.grid
 from matplotlib.mathtext import MathTextParser
 
-from DiscreteLatticeMech import Solver, Writer
-
-
 gui_location = os.path.dirname(os.path.abspath(__file__))
 package_location = gui_location + '/../../'
 print(package_location)
 sys.path.append(package_location)
 
+from DiscreteLatticeMech import Solver, Writer
 
 def rotate_vector(vector, angle):
     """ Rotate a vector according to an angle (rad)"""
