@@ -18,11 +18,15 @@ class Writer:
         print("Results folder: {}".format(self.folder))
 
     def WriteTensorsToFile(self, InputData, CMatTensor, FlexMatTensor):
-        # Store the InputData in the Result file
-        with open(self.folder + '/InputData.json', 'w',encoding='utf-8') as outfile:
-           json.dump(InputData, outfile, ensure_ascii=False, indent=6, sort_keys=False)
+
+        if InputData is not None:
+            # Store the InputData in the Result file
+            with open(self.folder + '/InputData.json', 'w',encoding='utf-8') as outfile:
+               json.dump(InputData, outfile, ensure_ascii=False, indent=6, sort_keys=False)
+
         # write Cmatrix to file
         np.savetxt(self.folder + '/CMatrix.txt', CMatTensor, fmt='%10.3f')
+
         # write Flexibility matrix to file
         np.savetxt(self.folder + '/FlexMatrix.txt', FlexMatTensor, fmt='%10.3f')
 

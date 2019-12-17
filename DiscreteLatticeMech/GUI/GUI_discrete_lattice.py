@@ -46,7 +46,7 @@ class view(object):
     zoom: zoom factor
     height: height of the graphic window for drawings
     width: width of the graphic window for drawings
-    
+
     get_translation(): return the current translation additional vector in screen coordinates
     screen_to_world(x_screen,y_screen): convert screen coordinates in world coordinates
     world_to_screen(x_world,y_world): convert world coordinates in screen coordinates
@@ -72,7 +72,7 @@ class view(object):
 
     def get_translation(self):
         """return the translation vector in screen coordinates"""
-        
+
         if self.translation_activate:
             P1 = self.world_to_screen(self.translation_P1x, self.translation_P1y)
             P2 = np.array([self.Mouse_position.x, self.Mouse_position.y])
@@ -89,7 +89,7 @@ class view(object):
         pos_x = x_screen/self.zoom-self.translation_x
         pos_y = (self.height-y_screen)/self.zoom-self.translation_y
         return np.array([pos_x, pos_y])
-        
+
     def world_to_screen(self, x_world, y_world):
         """ Convert world coordinates in screen coordinates
 
@@ -97,25 +97,25 @@ class view(object):
         """
         pos_x = (x_world+self.translation_x)*self.zoom
         pos_y = self.height-(y_world+self.translation_y)*self.zoom
-        return np.array([pos_x, pos_y])  
+        return np.array([pos_x, pos_y])
 
     def mathtext_to_wxbitmap(self, s):
         """Convert a Latex string in bitmap """
         ftimage, depth = self.mathtext_parser.parse(s, 150)
         return wx.Bitmap.FromBufferRGBA(
             ftimage.get_width(), ftimage.get_height(),
-            ftimage.as_rgba_str())      
-             
+            ftimage.as_rgba_str())
+
 
 class periodicity(object):
-    """Class for object : periodicity vectors 
-    
+    """Class for object : periodicity vectors
+
     x: x value
     y: y value
     length: length
-    number: identifier 
+    number: identifier
 
-    draw(dc, view): draw the vector 
+    draw(dc, view): draw the vector
     """
     def __init__(self, x, y, length, number):
         self.x = x
@@ -139,7 +139,7 @@ class periodicity(object):
         P3 = v+e3*self.length/10
         P2 = view.world_to_screen(P2[0], P2[1])+trans
         P3 = view.world_to_screen(P3[0], P3[1])+trans
-        
+
         dc.SetPen(wx.Pen("DARK GREEN", 3, style=wx.PENSTYLE_LONG_DASH))
 
         dc.DrawLine(P0[0], P0[1], P1[0], P1[1])
@@ -157,7 +157,7 @@ class periodicity(object):
 
 class node(object):
     """Class for object: node
-    
+
     x: x coordinate
     y: y coordinate
     radius: radius for screen drawing in pixel
@@ -179,7 +179,7 @@ class node(object):
 
     def draw(self, parent, dc, view):
         """draw node and all periodic nodes around
-        
+
         parent: class element parent
         dc: drawing functions class
         view: target graphic window
@@ -188,7 +188,7 @@ class node(object):
         pos = np.array([self.x, self.y])
 
         trans = view.get_translation()
-        
+
         Y1W = np.array([parent.periods[0].x, parent.periods[0].y])*parent.periods[0].length
         Y2W = np.array([parent.periods[1].x, parent.periods[1].y])*parent.periods[1].length
 
@@ -199,40 +199,40 @@ class node(object):
             for j in range(10):
 
                 dc.SetPen(wx.Pen("GREY", 1))
-                dc.SetBrush(wx.Brush("WHITE")) 
+                dc.SetBrush(wx.Brush("WHITE"))
                 pos2_S = view.world_to_screen(pos2[0], pos2[1])+trans
 
-                dc.DrawCircle(pos2_S[0], pos2_S[1], self.radius)   
+                dc.DrawCircle(pos2_S[0], pos2_S[1], self.radius)
 
                 pos2 = pos2+Y1W
 
             pos1 = pos1+Y2W
 
         dc.SetPen(wx.Pen("RED", 1))
-        dc.SetBrush(wx.Brush("RED")) 
+        dc.SetBrush(wx.Brush("RED"))
 
         pos_S = view.world_to_screen(pos[0], pos[1])+trans
 
-        dc.DrawCircle(pos_S[0], pos_S[1], self.radius)   
+        dc.DrawCircle(pos_S[0], pos_S[1], self.radius)
 
         if self.focused:
             dc.SetPen(wx.Pen("ORANGE", 3))
-            dc.SetBrush(wx.Brush("ORANGE")) 
+            dc.SetBrush(wx.Brush("ORANGE"))
             pos1 = pos+self.delta_1_focus*Y1W+self.delta_2_focus*Y2W
             pos1_S = view.world_to_screen(pos1[0], pos1[1])+trans
-            dc.DrawCircle(pos1_S[0], pos1_S[1], self.radius*1.5) 
+            dc.DrawCircle(pos1_S[0], pos1_S[1], self.radius*1.5)
 
         s = str(self.number)
         bitmap = view.mathtext_to_wxbitmap("$n_{"+s+"} $")
 
         dc.DrawBitmap(bitmap, pos_S[0]-bitmap.Width, pos_S[1]+self.radius+2, True)
-  
+
 
 class beam(object):
-    """Class for object: beam 
-    
-    node_1: identifier of node 1 
-    node_2: identifier of node 2 
+    """Class for object: beam
+
+    node_1: identifier of node 1
+    node_2: identifier of node 2
     length: length of the beam
     width: width of the beam
     delta_1: delta 1 factor for Y1 translation vector added to node 2 coordinates 
@@ -264,13 +264,13 @@ class beam(object):
         self.number = number
         self.section = section
         self.focused = False
-    
+
     def evaluate_k(self, parent):
         """evaluate length, director, stiffnesses ka and kb
-        
+
         parent: class element (parent)
         """
-        
+
         N1 = parent.index_node(self.node_1)
         N2 = parent.index_node(self.node_2)
         Y1 = parent.periods[0]
@@ -285,13 +285,13 @@ class beam(object):
         E_n = E/self.length
         self.e_x = E_n[0]
         self.e_y = E_n[1]
-        
+
         self.ka = self.material_E*self.width/self.length
         self.kb = self.material_E*(self.width/self.length)**3
 
     def draw(self, parent, dc, view):
         """draw the beam and periodic beams associated
-        
+
         parent : class element
         dc: drawing functions
         view: graphic window
@@ -341,11 +341,11 @@ class beam(object):
         bitmap = view.mathtext_to_wxbitmap("$b_{"+s+"} $")
 
         dc.DrawBitmap(bitmap, (N1_S[0]+N2_S[0])/2+width/2+2, (N1_S[1]+N2_S[1])/2+width/2+2, True)
-    
+
 
 class elements(object):
-    """"Arrays of basic elements of lattice 
-    
+    """Arrays of basic elements of lattice
+
     nodes[]: array of nodes
     beams[]: array of beams
     periods[]: array of periodicity vectors
@@ -366,10 +366,10 @@ class elements(object):
         self.P1_acquired_bool = False
 
         self.P1_acquired.focused = False
-    
+
     def draw(self, dc, view):
         """draw all objects : nodes, beams, periodicity vectors
-        
+
         dc: drawing functions
         view: graphic window
         """
@@ -383,10 +383,10 @@ class elements(object):
 
         for i in self.periods:
             i.draw(dc, view)
-    
+
     def index_node(self, node):
         """return the index of an node based on identifier value
-        
+
         node: identifier value
         """
         for i in self.nodes:
@@ -396,8 +396,8 @@ class elements(object):
 
 class Graph_window(wx.Window):
     """Class wx.window for the graphic window
-    
-    
+
+
     view_1: embed functions for dealing with screen vs world coordinates
     EL: all elements objects (nodes, beams, periodicity vectors)
     Gd_pere: Initial window, necessary function for accessing tree_ctrl
@@ -449,7 +449,7 @@ class Graph_window(wx.Window):
     def reassign_EL(self, EL):
         """Replace the instance of elements passed in argument"""
         self.EL = EL
- 
+
     def on_size(self, event):
         """Modify attributes on event SIZE"""
         width, height = self.GetClientSize()
@@ -458,7 +458,7 @@ class Graph_window(wx.Window):
         self.view_1.height = height
         self.update_drawing()
         event.Skip()
-    
+
     def on_paint(self, event):
         """Redraw all graphic components on event PAINT"""
         dc = wx.AutoBufferedPaintDC(self)
@@ -478,7 +478,7 @@ class Graph_window(wx.Window):
         # size = self.Size
         font = wx.Font(10, wx.SWISS, wx.NORMAL, wx.LIGHT) 
         dc.SetTextForeground((0, 0, 0))
-        dc.SetFont(font) 
+        dc.SetFont(font)
         if self.Gd_pere.File_saved:
             str1 = "(Saved)"
         else:
@@ -493,11 +493,11 @@ class Graph_window(wx.Window):
         dc.SetPen(wx.Pen("RED", line_width))
         dc.DrawLine(x-10, y-10, x+10, y+10)  # \
         dc.DrawLine(x-10, y+10, x+10, y-10)  # /
-   
+
     def update_drawing(self):
         """Force redrawing"""
         self.Refresh(False) 
-    
+
     def on_motion(self, event):
         """update attributes focus on mouse move in mode DELETE ELEMENT, ADD BEAM"""
         self.view_1.Mouse_position = event.GetPosition()
@@ -520,7 +520,7 @@ class Graph_window(wx.Window):
                 Y2 = self.EL.periods[1]
                 Y1W = np.array([Y1.x, Y1.y])*Y1.length
                 Y2W = np.array([Y2.x, Y2.y])*Y2.length
-                
+
                 N1_coord = np.array([N1.x, N1.y])
                 N2_coord = np.array([N2.x+i.delta_1*Y1W[0]+i.delta_2*Y2W[0], N2.y+i.delta_1*Y1W[1]+i.delta_2*Y2W[1]])
 
@@ -556,7 +556,7 @@ class Graph_window(wx.Window):
 
             Y1W = np.array([self.EL.periods[0].x, self.EL.periods[0].y])*self.EL.periods[0].length
             Y2W = np.array([self.EL.periods[1].x, self.EL.periods[1].y])*self.EL.periods[1].length
-            
+
             for i in self.EL.nodes:
                 pos_node_iW = np.array([i.x, i.y])
                 i.focused = False
@@ -574,7 +574,7 @@ class Graph_window(wx.Window):
                                 i.focused = True
                                 i.delta_1_focus = delta_1
                                 i.delta_2_focus = delta_2
-                               
+
         self.Refresh(False)
         event.Skip()
 
@@ -627,11 +627,11 @@ class Graph_window(wx.Window):
             numero = numero+1
 
             str_tree = "N.%i:(%5.2f,%5.2f)" % (numero, Pos_world[0], Pos_world[1])
-    
+
             self.Gd_pere.tree_ctrl_1.AppendItem(resultat[1], str_tree)
             self.EL.nodes.append(node(Pos_world[0], Pos_world[1], 5, numero))
             self.Gd_pere.File_saved = False
-        
+
         if self.EL.Mode == "ADD_BEAM_P1":
             for i in self.EL.nodes:
                 if i.focused:
@@ -640,7 +640,7 @@ class Graph_window(wx.Window):
                     i.focused = False
                     self.EL.P1_acquired_bool = True
                     break
-        
+
         if self.EL.Mode == "ADD_BEAM_P2":
             for i in self.EL.nodes:
                 if i.focused:
@@ -661,12 +661,12 @@ class Graph_window(wx.Window):
 
                     str_tree = "beam.%i:(%i,%i),(%i,%i),rect,%5.2f" % (numero, self.EL.P1_acquired.number, i.number,
                                                                        i.delta_1_focus, i.delta_2_focus, float(str4[5]))
-            
+
                     self.Gd_pere.tree_ctrl_1.AppendItem(resultat[1], str_tree)
-                   
+
                     self.EL.P1_acquired.focused = False
                     self.EL.P1_acquired_bool = False
-                    
+
                     resultat = self.Gd_pere.Search_branch_tree_ctrl_perso("Material")
                     if resultat[0] == -1:
                         self.Gd_pere.Message_perso("Error: no branch of material inputs", wx.ICON_ERROR)
@@ -677,7 +677,7 @@ class Graph_window(wx.Window):
                                               "rect", 0, float(str4[5]), 0, 0, 0, 0, float(str7[0]), numero))
                     self.EL.beams[len(self.EL.beams)-1].evaluate_k(self.EL)
                     self.Gd_pere.File_saved = False
-                    break            
+                    break
 
         self.Refresh()
         event.Skip()
@@ -688,7 +688,7 @@ class Graph_window(wx.Window):
         Pos_world = self.view_1.screen_to_world(Pos_screen.x, Pos_screen.y)
         self.view_1.translation_P1x = Pos_world[0]
         self.view_1.translation_P1y = Pos_world[1]
-        
+
         self.view_1.translation_activate = True
         self.Refresh(False)
         event.Skip()
@@ -700,7 +700,7 @@ class Graph_window(wx.Window):
         self.view_1.translation_activate = False
         self.view_1.translation_x = self.view_1.translation_x+Pos_world[0]-self.view_1.translation_P1x
         self.view_1.translation_y = self.view_1.translation_y+Pos_world[1]-self.view_1.translation_P1y
-        
+
         self.Refresh(False)
         event.Skip()
 
@@ -711,21 +711,21 @@ class Graph_window(wx.Window):
         Pos_mouse_world = self.view_1.screen_to_world(Pos_mouse_screen.x, Pos_mouse_screen.y)
         if wheel > 0 and self.view_1.zoom < 1000:
             self.view_1.zoom = self.view_1.zoom*1.1
-        
+
         if wheel < 0 and self.view_1.zoom > 1:
             self.view_1.zoom = self.view_1.zoom*0.9
 
         self.view_1.translation_x = (Pos_mouse_screen.x-Pos_mouse_world[0]*self.view_1.zoom)/self.view_1.zoom
         self.view_1.translation_y = (self.view_1.height-Pos_mouse_screen.y)/self.view_1.zoom-Pos_mouse_world[1]
-        
+
         self.Refresh(False)
         event.Skip()
-    
+
     def key_zoom(self, code_zoom):
         """Zoom in / out calculation according to code_zoom """
         Pos_mouse_screen = self.view_1.Mouse_position
         Pos_mouse_world = self.view_1.screen_to_world(Pos_mouse_screen.x, Pos_mouse_screen.y)
-  
+
         if code_zoom == 1 and self.view_1.zoom < 1000:
             self.view_1.zoom = self.view_1.zoom*1.1
 
@@ -734,7 +734,7 @@ class Graph_window(wx.Window):
 
         self.view_1.translation_x = (Pos_mouse_screen.x-Pos_mouse_world[0]*self.view_1.zoom)/self.view_1.zoom
         self.view_1.translation_y = (self.view_1.height-Pos_mouse_screen.y)/self.view_1.zoom-Pos_mouse_world[1]
-        
+
         self.Refresh(False)
 
     def Get_world_pos(self):
@@ -833,7 +833,7 @@ class MyFrame(wx.Frame):
         font_1 = wx.Font(pointSize=12, family=wx.FONTFAMILY_MODERN, style=wx.FONTSTYLE_NORMAL, weight=wx.FONTWEIGHT_NORMAL)
         self.multiText.SetFont(font_1)
         self.multiText.write("Init\n")
-        
+
         self.window_1 = wx.SplitterWindow(self, wx.ID_ANY)
         self.tree_ctrl_1 = wx.TreeCtrl(self.window_1, wx.ID_ANY)
         self.Bind(wx.EVT_TREE_SEL_CHANGED, self.selection_item, self.tree_ctrl_1)
@@ -849,7 +849,7 @@ class MyFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.Bouton_ok, self.button_2)
         self.Bind(wx.EVT_BUTTON, self.Bouton_annuler, self.button_3)
         self.Bind(wx.EVT_CHAR_HOOK, self.on_char)
-       
+
         # windows end
         # properties and layout
         self.__set_properties()
@@ -865,18 +865,18 @@ class MyFrame(wx.Frame):
         if (key == 390 or key == 54) and ctrl == 1:
             self.panel_1.key_zoom(2)
         event.Skip()
-     
+
     def on_close(self, event):
         """When window close"""
         self.Destroy()
-    
+
     def Message_perso(self, msg_1, categorie):
         """Show msg_1 associated win an icon category"""
         # categorie = wx.ICON_ERROR ou wx.ICON_WARNING ou wx.ICON_INFORMATION
         msg = wx.MessageDialog(None, message=msg_1, style=wx.OK | categorie)
         msg.ShowModal()
         msg.Destroy()
-    
+
     def Set_grid_perso(self, col, row, labels_col, labels_row):
         """Set_grid_perso(self,col,row,labels_col,labels_row)"""
         Number_cols = self.grid_1.GetNumberCols()
@@ -893,7 +893,7 @@ class MyFrame(wx.Frame):
             self.grid_1.SetColLabelValue(i, labels_col[i])
         for i in range(row):
             self.grid_1.SetRowLabelValue(i, labels_row)
-   
+
     def __set_properties(self):
         """define initial properties of window elements (wx)"""
         self.SetTitle("Homogenenization lattice")
@@ -953,7 +953,7 @@ class MyFrame(wx.Frame):
         if not self.File_saved:
             if wx.MessageBox("Current content has not been saved! Proceed?", "Please confirm", wx.ICON_QUESTION | wx.YES_NO, self) == wx.YES:
                 self.Save_file()
-        
+
         with wx.FileDialog(self, "Open XML file", wildcard="xml files (*.xml)|*.xml", style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
@@ -1014,9 +1014,9 @@ class MyFrame(wx.Frame):
         self.File_saved = True
         self.Filename_defined = True
         myfile.close()
-        
+
     def File_open(self, event):  # from menu
-        """menu file open"""  
+        """menu file open"""
         self.Open_file()
         event.Skip()
 
@@ -1024,7 +1024,7 @@ class MyFrame(wx.Frame):
         with wx.FileDialog(self, "Save XML file", wildcard="xml files (*.xml)|*.xml", style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
-                return ""    
+                return ""
 
             # save the current contents in the file
             file = fileDialog.GetPath()
@@ -1071,18 +1071,18 @@ class MyFrame(wx.Frame):
         except IOError:
             self.Message_perso("IOError", wx.ICON_ERROR)
         self.File_saved = True
-        
+
     def File_save(self, event):
-        """menu file save""" 
-        self.Save_file() 
+        """menu file save"""
+        self.Save_file()
         event.Skip()
-        
-    def File_save_as(self, event):  
+
+    def File_save_as(self, event):
         """menu file save as"""
         self.Define_filename()
         self.Save_file()
         event.Skip()
-    
+
     def Generate_json(self, file):
         myfile = open(file, "w+")
         myfile.write("{\n")
@@ -1228,8 +1228,8 @@ class MyFrame(wx.Frame):
         myfile.close()
         return 0
 
-    def File_generate_txt(self, event):  
-        """File_generate_txt(event): menu generate txt : 
+    def File_generate_txt(self, event):
+        """File_generate_txt(event): menu generate txt :
         generate the text code file for topology lattice """
         with wx.FileDialog(self, "Save data txt file", wildcard="txt files (*.txt)|*.txt",
                            style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
@@ -1271,11 +1271,11 @@ class MyFrame(wx.Frame):
         solver.solve(data)
 
         # Write to file
-        
-        writer.WriteTensorsToFile(solver.CMatTensor, solver.FlexMatTensor)
+
+        writer.WriteTensorsToFile(None, solver.CMatTensor, solver.FlexMatTensor)
         writer.WriteEffectivePropertiesToFile(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G, solver.rho)
         writer.PlotEffectiveProperties(solver.Bulk, solver.Ex, solver.Ey, solver.Poissonyx, solver.Poissonxy, solver.G)
-    
+
     def Calculation_letsdoit(self, event):
         """Calculations Go"""
         self.Generate_json("input_data.json")
@@ -1292,25 +1292,25 @@ class MyFrame(wx.Frame):
             Eff_file = open(path+"/EffectProperties.txt", "r")
             self.multiText.write("Effective properties:\n")
             self.multiText.write(Eff_file.read())
-            Eff_file.close()    
+            Eff_file.close()
             Flex_file = open(path+"/FlexMatrix.txt", "r")
             self.multiText.write("Flexibility Matrix:\n")
             self.multiText.write(Flex_file.read())
-            Eff_file.close()     
+            Eff_file.close()
         except Exception as exc:
             self.multiText.write("Something wrong! Unable to do calculations {}\n".format(str(exc)))
         event.Skip()
- 
+
     def Tools_add_point(self, event):
         """menu tool activation mode add point"""
         self.EL.Mode = "ADD_POINT"
         event.Skip()
 
-    def Tools_add_beam(self, event):  
+    def Tools_add_beam(self, event):
         """menu tool activation mode add beam"""
         self.EL.Mode = "ADD_BEAM_P1"
         event.Skip()
-   
+
     def Icone_add_beam(self, event):
         self.EL.Mode = "ADD_BEAM_P1"
         event.Skip()
@@ -1320,13 +1320,13 @@ class MyFrame(wx.Frame):
         self.EL.Mode = "ADD_POINT"
         self.panel_1.Refresh(False)
         event.Skip()
-    
+
     def Icone_delete(self, event):
         """icon activation mode delete"""
         self.EL.Mode = "DELETE_ELEMENT"
         self.panel_1.Refresh(False)
         event.Skip()
-   
+
     def Search_branch_tree_ctrl_perso(self, nom):
         """Search in tree ctrl for branch "nom"
         return -1,0,0 if no branch "nom" is found
@@ -1360,7 +1360,7 @@ class MyFrame(wx.Frame):
     def Search_item_tree_ctrl_perso(self, nom, numero):
         """    Search_item_tree_ctrl_perso(nom,numero): Search an item in child named "nom" 
                 with identifier "numero"
-                
+
                 "nom" must be 'Nodes' for node, 'Basis' for periodicity vector, 'Beams' for beam
                 return -1,0 if the branch with name "nom" not found 
                             or if none child have identifier "numero"
@@ -1381,7 +1381,7 @@ class MyFrame(wx.Frame):
             if f is False:
                 return -1, 0
             str1 = self.tree_ctrl_1.GetItemText(item2[0])
-        
+
         item2 = self.tree_ctrl_1.GetFirstChild(item2[0])
         f = item2[0].IsOk()
         if f is False:
@@ -1396,10 +1396,10 @@ class MyFrame(wx.Frame):
             item2 = self.tree_ctrl_1.GetNextChild(item2[0], item2[1])
             f = item2[0].IsOk()
             if f is False:
-                break 
+                break
         return -1, 0
-        
-    def selection_item(self, event):  
+
+    def selection_item(self, event):
         """Copy values of item in tree ctrl to grid"""
         item_1 = event.Item
         str_2 = self.tree_ctrl_1.GetItemText(item_1)
@@ -1410,7 +1410,7 @@ class MyFrame(wx.Frame):
             self.Set_grid_perso(1, 1, ["Elastic"], "modulus(GPa)")
             str_5 = str_3[1].split(',')
             self.grid_1.SetCellValue(0, 0, str_5[0])
-        
+
         if str_4[0].strip() == "Y":
             self.Set_grid_perso(2, 1, ["Y. .X", "Y. .Y"], str_4[1])
             str_5 = str_3[1].split(',')
@@ -1418,7 +1418,7 @@ class MyFrame(wx.Frame):
             str_5[1] = str_5[1].replace('(', '').replace(')', '')
             self.grid_1.SetCellValue(0, 0, str_5[0])
             self.grid_1.SetCellValue(0, 1, str_5[1])
-        
+
         if str_4[0].strip() == "N":
             self.Set_grid_perso(2, 1, ["N. .X", "N. .Y"], str_4[1])
             str_5 = str_3[1].split(',')
@@ -1426,7 +1426,7 @@ class MyFrame(wx.Frame):
             str_5[1] = str_5[1].replace('(', '').replace(')', '')
             self.grid_1.SetCellValue(0, 0, str_5[0])
             self.grid_1.SetCellValue(0, 1, str_5[1])
-        
+
         if str_4[0].strip() == "beam":
             self.Set_grid_perso(6, 1, ["beam. .Node 1", "beam. .node 2", "delta 1", "delta 2", "Section type", "Section dim."], str_4[1])
             str_5 = str_3[1].split(',')
@@ -1442,13 +1442,13 @@ class MyFrame(wx.Frame):
             self.grid_1.SetCellValue(0, 5, str_5[5])
         event.Skip()
 
-    def selection_cell(self, event):  
+    def selection_cell(self, event):
         event.Skip()
 
-    def cell_changed(self, event): 
+    def cell_changed(self, event):
         event.Skip()
 
-    def Bouton_ok(self, event): 
+    def Bouton_ok(self, event):
         """Modify values in tree ctrl from grid"""
         self.File_saved = False
         str1 = self.grid_1.GetColLabelValue(0)
@@ -1526,11 +1526,11 @@ class MyFrame(wx.Frame):
                 self.tree_ctrl_1.SetItemText(resultat[1], str_tree)
             else:
                 self.Message_perso("None entry found in tree ctrl", wx.ICON_ERROR)
-            
+
         self.panel_1.Refresh()
         event.Skip()
 
-    def Bouton_annuler(self, event):  
+    def Bouton_annuler(self, event):
         event.Skip()
 
 
