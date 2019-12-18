@@ -13,7 +13,7 @@ if os.path.exists(requirements_filepath):
     for line in open(requirements_filepath):
         DEPENDENCIES.append(line.strip())
 
-NAME = 'DicreteLatticeMech'
+NAME = 'DiscreteLatticeMech'
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
