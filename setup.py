@@ -1,6 +1,6 @@
 """Setup DiscreteLatticeMech."""
 import os
-from distutils.core import setup
+from setuptools import setup
 
 
 SETUP_DIR = os.path.dirname(os.path.abspath(__file__))
