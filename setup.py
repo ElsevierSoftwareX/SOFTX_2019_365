@@ -20,7 +20,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name=NAME,
-    version='0.1',
+    version='1.0.0',
     author='Nikos Karathanasopoulos',
     author_email='karathanasopoulosn@gmail.com',
     description='DiscreteLatticeMech',
