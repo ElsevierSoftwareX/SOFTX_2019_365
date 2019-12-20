@@ -86,7 +86,7 @@ where,
 - `"NumberNodes"`: number of inner nodes
 - `"Ob", "Eb", "Delta1", "Delta2"`: list of origin and end points along with delta
 - `"Ka", "Kb"`: list of element axial and bending stiffness
-- `"Lb", "tb"`: list of element lengths and volumes
+- `"Lb", "tb"`: list of element lengths and thickness
 - `"L1", "L2"`: norm of the periodicity vectors
 
 
@@ -139,3 +139,4 @@ the current date and time on the system, with the following files:
 - `NSB_Moduli.png`, `NormalToShear.png`, `PoissonRation.png`: plots of the computed effective properties
 
 #### Using the GUI tool:
+The GUI is mainly provided as a support tool for the creation of the input JSON file that is necessary for the analysis of a certain lattice structure. It allows for the direct graphical parsing of different lattice geometries, through the definition of the nodes, elements and periodicity vectors of the primal material unit. The created input can be thereafter independently used as previously illustrated in the examples section. Different examples of the use of the GUI tool are provided in the `Videos` folder. 
